@@ -1,7 +1,7 @@
 install.packages("shiny")
 library("shiny")
 
-navbarPage(
+Main_UI_Section <- navbarPage(
   "Trends in Cryptocurrencies!",
   Home,
   Question1,
