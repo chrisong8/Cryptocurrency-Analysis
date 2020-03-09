@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 # install.packages("shiny")
-=======
->>>>>>> 59572881b9a098ad9b387769c23c54780c87bf73
 library("shiny")
 # install.packages("ggplot2")
 library("ggplot2")
@@ -19,7 +16,7 @@ Question1 <- tabPanel(
 
 Question2 <- tabPanel(
   "Bitcoin vs Ethereum price", 
-  titlePanel("Comparing Bitcoin versus Ethereum prices over time"),
+  headerPanel("Comparing Bitcoin versus Ethereum prices over time"),
   sidebarPanel(
     checkboxInput(
       id = "combined_price_data",
@@ -38,7 +35,10 @@ Question2 <- tabPanel(
     with a point scatterplot. The x-axis represents dates, and the y-axis represents
     the price values in USD. The colors of the points represent the currency the observation
     belongs to. The years that you would like to view can be changed by checking boxes of 
-    any combination of years from 2017 to 2020.")
+    any combination of years from 2017 to 2020."), 
+  p("Overall, many points fluctuate from the mean value. This may suggest that cryptocurrency
+    is rapidly changing, as it is not completely solidified as a universal form of currency
+    and is frequently subject to change."),
 )
 
 Question3 <- tabPanel(
