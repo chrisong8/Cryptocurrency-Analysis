@@ -1,18 +1,13 @@
+<<<<<<< HEAD
 # install.packages("shiny")
+=======
+>>>>>>> 59572881b9a098ad9b387769c23c54780c87bf73
 library("shiny")
 # install.packages("ggplot2")
 library("ggplot2")
 
 bitcoin <-  read.csv("Binance_BTCUSDT_d.csv", stringsAsFactors = FALSE)
 ethereum <- read.csv("Binance_ETHUSDT_d.csv", stringsAsFactors = FALSE)
-
-Main_UI_Section <- navbarPage(
-  "Trends in Cryptocurrencies!",
-  Home,
-  Question1,
-  Question2,
-  Question3
-)
 
 Home <- tabPanel(
   "Label_Home"
@@ -48,4 +43,12 @@ Question2 <- tabPanel(
 
 Question3 <- tabPanel(
   "Label_Question3"
+)
+
+my_ui <- navbarPage(
+  "Trends in Cryptocurrencies!",
+  Home,
+  Question1,
+  Question2,
+  Question3
 )
