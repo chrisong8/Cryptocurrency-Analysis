@@ -30,3 +30,5 @@ server <- function(input, output) {
   
 }
 
+=======
+>>>>>>> 959a7b9a08f25d4f0a5ebcab6f17b724690020bf
