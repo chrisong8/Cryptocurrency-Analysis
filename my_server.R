@@ -35,7 +35,6 @@ server <- function(input, output) {
     scale_x_continuous(limits = input$price)
   })
   
-  
   output$volumeAnalysis <- renderPlot({
     volume_analysis <- ggplot(data = combined_volume_data) +
       geom_point(mapping = aes(x = Date, y = Bitcoin_Volume, color = "Bitcoin Volume"), alpha = .4) +
