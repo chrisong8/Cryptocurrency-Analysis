@@ -38,16 +38,25 @@ Question3 <- tabPanel(
   ),
   sidebarLayout(
     sidebarPanel(
-      sliderInput("volume", p("Current Date of Volumes"), min = 2015, max = 2020, step = 1),
+      sliderInput(inputId = "volume", p("Current Date of Volumes"), min = 2015, max = 2020, step = 1),
       
       br(),
       
-      checkboxInput("cryptocurrency",p("Select the cryptocurrency you would like to include:"),choices = c("Projected population"=1,"Thefts"=2,"Traffic accidents"=3,"Homicides"=4,"School deserters"=5,"Sports venues"=6,"Extortions"=7),selected = c("Projected population"=1,"Thefts"=2,"Traffic accidents"=3,"Homicides"=4,"School deserters"=5,"Sports venues"=6,"Extortions"=7)),
+      checkboxInput(inputId = "cryptocurrency",p("Select the cryptocurrency you would like to include:"),choices = c("Bitcoin", "Ethereum")),
       mainPanel(
-        plotOutput(outputId = "volumeEthereum"),
-        plotOutput(outputId = "volumeBitcoin"),
+        fluidRow(
+          plotOutput(outputId = "volumeAnalysis"),
+        ),
         
-      )
+      ),
+      
+      h3("Results and Implications"),
+      
+      p("Based on the statistics, it was clear that bitcoin was the favored competitor in terms of cryptocurrencies trading. 
+        But what's suprising was that Ethereum's volume trading wasn't as small as we thought it would. 
+        We were assuming that Bitcoin would be the monopoly in the cryptocurrency business because in a surface level, users tends to only know about Bitcoin. 
+        Because of the volume, it defintilt clarify our assumptions of Bitcoin being the only competitor. 
+        Thus, the results demonstrates that Bitcoin is popular cryptocurrencies and it doesn't mean they're the only dominating the field. ")
       
     )
   )
