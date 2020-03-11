@@ -1,4 +1,3 @@
-library("shiny")
 # install.packages("shiny")
 library("shiny")
 # install.packages("ggplot2")
@@ -113,7 +112,7 @@ Question3 <- tabPanel(
       
       br(),
       
-      checkboxInput(inputId = "cryptocurrency",p("Select the cryptocurrency you would like to include:"),choices = c("Bitcoin", "Ethereum")),
+      radioButtons(inputId = "cryptocurrency",p("Select the cryptocurrency you would like to include:"),choices = c("Bitcoin" = 1, "Ethereum" = 2)),
       mainPanel(
         fluidRow(
           plotOutput(outputId = "volumeAnalysis"),
@@ -133,11 +132,20 @@ Question3 <- tabPanel(
   )
 )
 
+Result <- tabPanel(
+  headerPanel("Comparing the Prices Differences"), 
+  plotOutput("result"),
+  h3("Results and Implications"),
+  p("")
+  
+)
+
 my_ui <- navbarPage(
   "Trends in Cryptocurrencies!",
   Home,
   Question1,
   Question2,
-  Question3
+  Question3,
+  Result
 )
 
