@@ -1,6 +1,7 @@
 library("shiny")
 library("ggplot2")
-source("analysis_section_3.R")
+library("dplyr")
+library("DT")
 
 bitcoin <-  read.csv("www/Binance_BTCUSDT_d.csv", stringsAsFactors = FALSE)
 ethereum <- read.csv("www/Binance_ETHUSDT_d.csv", stringsAsFactors = FALSE)
@@ -25,7 +26,7 @@ combined_volume_data <- filter(combined_volume_data, Bitcoin_Volume != 0, Ethere
 
 server <- function(input, output) {
   output$priceAnalysis <- renderPlot({
-    price_analysis <- ggplot(data = combined_price_data) +
+    ggplot(data = combined_price_data) +
       geom_point(mapping = aes(x = Date, y = Bitcoin_Price, color = "Bitcoin Price"), alpha = .4) +
       geom_point(mapping = aes(x = Date, y = Ethereum_Price, color = "Ethereum Price"), alpha = .4) +
       labs(
@@ -33,37 +34,20 @@ server <- function(input, output) {
         x = "Dates" ,
         y = "Price"
       )
-    scale_x_continuous(limits = input$combined_price_data)
+    scale_x_continuous(limits = input$price)
   })
   
-  
-  output$volumeAnalysis <- reactive({
-    if(input$cryptocurrency == 1) {
-      renderPlot({
-        volume_analysis <- ggplot(data = combined_volume_data) +
-          geom_point(mapping = aes(x = Date, y = Bitcoin_Volume, color = "Bitcoin Volume"), alpha = .4) +
-          labs(
-            title = "Volume Analysis for Bitcoin and Ethereum",
-            x = "Dates" ,
-            y = "Volume"
-          )
-        scale_x_continuous(limits = input$volume)
-      })    
-      } else if (input$cryptocurrency == 2) { renderPlot({
-        volume_analysis <- ggplot(data = combined_volume_data) +
-          geom_point(mapping = aes(x = Date, y = Ethereum_Volume, color = "Ethereum Volume"), alpha = .4) +
-          labs(
-            title = "Volume Analysis for Bitcoin and Ethereum",
-            x = "Dates" ,
-            y = "Volume"
-          )
-        scale_x_continuous(limits = input$volume)
-      })
-      }
+  output$volumeAnalysis <- renderPlot({
+    volume_analysis <- ggplot(data = combined_volume_data) +
+      geom_point(mapping = aes(x = Date, y = Bitcoin_Volume, color = "Bitcoin Volume"), alpha = .4) +
+      geom_point(mapping = aes(x = Date, y = Ethereum_Volume, color = "Ethereum Volume"), alpha = .4) +
+      labs(
+        title = "Volume Analysis for Bitcoin and Ethereum",
+        x = "Dates" ,
+        y = "Volume"
+      )
+    scale_x_continuous(limits = input$volume)
   })
-    
-
-
   
   output$RawDataBitcoin <- DT::renderDataTable(
     DT::datatable({
@@ -103,30 +87,4 @@ server <- function(input, output) {
     colnames = c("Date","Symbol","Open","High","Low","Close","Volume BTC","Volume USDT")
     ))
   
-  output$result <- renderPlot({
-    bitcoin_result <- ggplot(data = price_difference_bitcoin) +
-      geom_point(mapping = aes(x = Volume.USDT, y = difference, colour = "High"), color = "Blue", alpha = .5) +
-      geom_smooth(mapping = aes(x = Volume.USDT, y = difference, colour = "High"), color = "Red", alpha = .5) +
-      labs(
-        title = "High and Low Price for Bitcoin",
-        x = "Volume" ,
-        y = "Difference in USD"
-      )
-    
-    ethereum_result <- ggplot(data = price_difference_ethereum) +
-      geom_point(mapping = aes(x = Volume.USDT, y = difference, colour = "High"), color = "Blue", alpha = .5) +
-      geom_smooth(mapping = aes(x = Volume.USDT, y = difference, colour = "High"), color = "Red", alpha = .5) +
-      labs(
-        title = "High and Low Price for Ethereum",
-        x = "Volume" ,
-        y = "Difference in USD"
-      )
-    
-  })
-  
-  
 }
-
-
-
-
