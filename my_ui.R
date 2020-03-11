@@ -3,8 +3,8 @@ library("shiny")
 # install.packages("ggplot2")
 library("ggplot2")
 
-bitcoin <-  read.csv("www/Binance_BTCUSDT_d.csv", stringsAsFactors = FALSE)
-ethereum <- read.csv("www/Binance_ETHUSDT_d.csv", stringsAsFactors = FALSE)
+bitcoin <-  read.csv("Binance_BTCUSDT_d.csv", stringsAsFactors = FALSE)
+ethereum <- read.csv("Binance_ETHUSDT_d.csv", stringsAsFactors = FALSE)
 
 Home <- tabPanel(
   icon("home"),
@@ -71,10 +71,13 @@ Question2 <- tabPanel(
   "Bitcoin vs Ethereum price", 
   headerPanel("Comparing Bitcoin versus Ethereum prices over time"),
   sidebarPanel(
-    checkboxInput(
-      id = "combined_price_data",
-      choices = c("2017", "2018", "2019", "2020")
-    ),
+    sliderInput(inputId = "volume", p("Current Date of Prices"), min = 2015, max = 2020, step = 1),
+    
+    br(),
+    checkboxInput(inputId = "cryptocurrency",
+                    p("Select the cryptocurrency you would like to include:"),
+                    choices = c("Bitcoin", "Ethereum")
+                  ),
   ),
   p("How do the price values of Bitcoin and Ethereum compare with each other
     over time? Bitcoin and Ethereum are the 2 biggest currencies, and we look 
