@@ -73,7 +73,7 @@ Question2 <- tabPanel(
   "Bitcoin vs Ethereum price", 
   headerPanel("Comparing Bitcoin versus Ethereum prices over time"),
   sidebarPanel(
-    sliderInput(inputId = "volume", p("Current Date of Prices"), value = 1, min = 2015, max = 2020, step = 1),
+    sliderInput(inputId = "volume", p("Current Date of Prices"), value = 2015, min = 2015, max = 2020, step = 1),
     
     br(),
     checkboxGroupInput(inputId = "cryptocurrency",
@@ -88,7 +88,7 @@ Question2 <- tabPanel(
     trends for cryptocurrency itself, since price is influenced by things such as 
     supply and demand. For this visualization, we will use the value of each 
     currency at market close."),
-  renderPlot(price_analysis),
+  renderPlot(priceAnalysis),
   p("We chose to visualize the relationship between Bitcoin and Ethereum price values
     with a point scatterplot. The x-axis represents dates, and the y-axis represents
     the price values in USD. The colors of the points represent the currency the observation
@@ -112,7 +112,7 @@ Question3 <- tabPanel(
   ),
   sidebarLayout(
     sidebarPanel(
-      sliderInput(inputId = "volume", p("Current Date of Volumes"),value = 1, min = 2015, max = 2020, step = 1),
+      sliderInput(inputId = "volume", p("Current Date of Volumes"),value = 2015, min = 2015, max = 2020, step = 1),
       br(),
       checkboxGroupInput(inputId = "cryptocurrency",p("Select the cryptocurrency you would like to include:"),choices = c("Bitcoin", "Ethereum")),
     ),
