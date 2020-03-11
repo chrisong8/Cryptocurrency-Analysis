@@ -1,8 +1,8 @@
 library("shiny")
 library("ggplot2")
 
-bitcoin <-  read.csv("Binance_BTCUSDT_d.csv", stringsAsFactors = FALSE)
-ethereum <- read.csv("Binance_ETHUSDT_d.csv", stringsAsFactors = FALSE)
+bitcoin <-  read.csv("www/Binance_BTCUSDT_d.csv", stringsAsFactors = FALSE)
+ethereum <- read.csv("www/Binance_ETHUSDT_d.csv", stringsAsFactors = FALSE)
 
 volume_bitcoin <- select(bitcoin,Date, Volume.USDT)
 names(volume_bitcoin)[names(volume_bitcoin) == "Volume.USDT"] <- "Bitcoin_Volume"
