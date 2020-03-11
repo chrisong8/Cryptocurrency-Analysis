@@ -96,9 +96,6 @@ Question2 <- tabPanel(
 )
 
 Question3 <- tabPanel(
-  "Label_Question3",
-  
-  br(),
   
   fluidRow(
     h1("How do the trading volumes of Bitcoin and Ethereum compare with each other over time?"),
