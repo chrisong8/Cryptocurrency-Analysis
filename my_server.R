@@ -1,5 +1,7 @@
 library("shiny")
 library("ggplot2")
+library("dplyr")
+library("DT")
 
 bitcoin <-  read.csv("www/Binance_BTCUSDT_d.csv", stringsAsFactors = FALSE)
 ethereum <- read.csv("www/Binance_ETHUSDT_d.csv", stringsAsFactors = FALSE)
@@ -86,6 +88,3 @@ server <- function(input, output) {
     ))
   
 }
-
-
-
