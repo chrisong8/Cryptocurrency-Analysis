@@ -27,6 +27,43 @@ server <- function(input, output) {
     scale_x_continuous(limits = input$volume)
   })
   
+  output$RawDataBitcoin <- DT::renderDataTable(
+    DT::datatable({
+      bitcoin
+    },
+    options = list(lengthMenu=list(c(5,15,20),c('5','15','20')),pageLength=10,
+                   initComplete = JS(
+                     "function(settings, json) {",
+                     "$(this.api().table().header()).css({'background-color': 'moccasin', 'color': '1c1b1b'});",
+                     "}"),
+                   columnDefs=list(list(className='dt-center',targets="_all"))
+    ),
+    filter = "top",
+    selection = 'multiple',
+    style = 'bootstrap',
+    class = 'cell-border stripe',
+    rownames = FALSE,
+    colnames = c("Date","Symbol","Open","High","Low","Close","Volume BTC","Volume USDT")
+    ))
+  
+  output$RawDataEthereum <- DT::renderDataTable(
+    DT::datatable({
+      ethereum
+    },
+    options = list(lengthMenu=list(c(5,15,20),c('5','15','20')),pageLength=10,
+                   initComplete = JS(
+                     "function(settings, json) {",
+                     "$(this.api().table().header()).css({'background-color': 'moccasin', 'color': '1c1b1b'});",
+                     "}"),
+                   columnDefs=list(list(className='dt-center',targets="_all"))
+    ),
+    filter = "top",
+    selection = 'multiple',
+    style = 'bootstrap',
+    class = 'cell-border stripe',
+    rownames = FALSE,
+    colnames = c("Date","Symbol","Open","High","Low","Close","Volume BTC","Volume USDT")
+    ))
   
 }
 
