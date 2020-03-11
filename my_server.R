@@ -24,6 +24,7 @@ server <- function(input, output) {
         x = "Dates" ,
         y = "Volume"
       )
+    scale_x_continuous(limits = input$volume)
   })
   
   
