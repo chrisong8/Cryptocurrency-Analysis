@@ -2,9 +2,11 @@
 library("shiny")
 # install.packages("ggplot2")
 library("ggplot2")
+#install.packages("shinythemes")
+library("shinythemes")
 
-bitcoin <-  read.csv("Binance_BTCUSDT_d.csv", stringsAsFactors = FALSE)
-ethereum <- read.csv("Binance_ETHUSDT_d.csv", stringsAsFactors = FALSE)
+bitcoin <-  read.csv("www/Binance_BTCUSDT_d.csv", stringsAsFactors = FALSE)
+ethereum <- read.csv("www/Binance_ETHUSDT_d.csv", stringsAsFactors = FALSE)
 
 Home <- tabPanel(
   icon("home"),
@@ -71,13 +73,13 @@ Question2 <- tabPanel(
   "Bitcoin vs Ethereum price", 
   headerPanel("Comparing Bitcoin versus Ethereum prices over time"),
   sidebarPanel(
-    sliderInput(inputId = "volume", p("Current Date of Prices"), min = 2015, max = 2020, step = 1),
+    sliderInput(inputId = "volume", p("Current Date of Prices"), value = 1, min = 2015, max = 2020, step = 1),
     
     br(),
-    checkboxInput(inputId = "cryptocurrency",
-                    p("Select the cryptocurrency you would like to include:"),
-                    choices = c("Bitcoin", "Ethereum")
-                  ),
+    checkboxGroupInput(inputId = "cryptocurrency",
+                       p("Select the cryptocurrency you would like to include:"),
+                       choices = c("Bitcoin", "Ethereum")
+    ),
   ),
   p("How do the price values of Bitcoin and Ethereum compare with each other
     over time? Bitcoin and Ethereum are the 2 biggest currencies, and we look 
@@ -98,7 +100,7 @@ Question2 <- tabPanel(
 )
 
 Question3 <- tabPanel(
-  
+  "Bitcoin vs Ethereum Volume",
   fluidRow(
     h1("How do the trading volumes of Bitcoin and Ethereum compare with each other over time?"),
     p("Volume represents, among other things, potential and interest in the currency. 
@@ -107,40 +109,29 @@ Question3 <- tabPanel(
         "),
     
     br()
-    
   ),
   sidebarLayout(
     sidebarPanel(
-      sliderInput(inputId = "volume", p("Current Date of Volumes"), min = 2015, max = 2020, step = 1),
-      
+      sliderInput(inputId = "volume", p("Current Date of Volumes"),value = 1, min = 2015, max = 2020, step = 1),
       br(),
-      
-      radioButtons(inputId = "cryptocurrency",p("Select the cryptocurrency you would like to include:"),choices = c("Bitcoin" = 1, "Ethereum" = 2)),
-      mainPanel(
-        fluidRow(
-          plotOutput(outputId = "volumeAnalysis"),
-        ),
-        
+      checkboxGroupInput(inputId = "cryptocurrency",p("Select the cryptocurrency you would like to include:"),choices = c("Bitcoin", "Ethereum")),
+    ),
+    mainPanel(
+      fluidRow(
+        plotOutput(outputId = "volumeAnalysis"),
       ),
-      
       h3("Results and Implications"),
-      
       p("Based on the statistics, it was clear that bitcoin was the favored competitor in terms of cryptocurrencies trading. 
-        But what's suprising was that Ethereum's volume trading wasn't as small as we thought it would. 
-        We were assuming that Bitcoin would be the monopoly in the cryptocurrency business because in a surface level, users tends to only know about Bitcoin. 
-        Because of the volume, it defintilt clarify our assumptions of Bitcoin being the only competitor. 
-        Thus, the results demonstrates that Bitcoin is popular cryptocurrencies and it doesn't mean they're the only dominating the field. ")
-      
+      But what's suprising was that Ethereum's volume trading wasn't as small as we thought it would. 
+      We were assuming that Bitcoin would be the monopoly in the cryptocurrency business because in a surface level, users tends to only know about Bitcoin. 
+      Because of the volume, it defintilt clarify our assumptions of Bitcoin being the only competitor. 
+      Thus, the results demonstrates that Bitcoin is popular cryptocurrencies and it doesn't mean they're the only dominating the field. ")
     )
   )
 )
 
 Result <- tabPanel(
-  headerPanel("Comparing the Prices Differences"), 
-  plotOutput("result"),
-  h3("Results and Implications"),
-  p("")
-  
+  "Result Page"
 )
 
 my_ui <- navbarPage(
@@ -148,7 +139,6 @@ my_ui <- navbarPage(
   Home,
   Question1,
   Question2,
-  Question3,
+  Question3, 
   Result
 )
-
