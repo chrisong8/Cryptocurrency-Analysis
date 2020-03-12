@@ -12,7 +12,7 @@ Home <- tabPanel(
   icon("home"),
   fluidRow(column(tags$img(src="bitcoin.jpg", width="200px",height="260px"),width=2),
            column(
-             p("Our projects looks to investigate the trends of cryptocurrency. Cryptocurrency is a digital 
+             h4(p("Our projects looks to investigate the trends of cryptocurrency. Cryptocurrency is a digital 
                form of money/currency. In simple terms, it only has an electronic form. Like regular money, it 
                may be bought,traded, or accepted as payment, but it can also be mined. Cryptocurrency is mined 
                in a process in which transactions for the currency are verified, then added to the blockchain, 
@@ -23,8 +23,8 @@ Home <- tabPanel(
                has shifted from barter trading, to universal monetary standards such as the dollar, to recent 
                usage of cryptocurrency in many markets. Therefore, it could be interesting to examine what many 
                coin as the next big thing for currency's evolution.", 
-               style="text-align:justify;color:black;background-color:lavender;padding:15px;border-radius:10px"),
-             width = 8,
+                  style="text-align:left;color:black;background-color:lavender;padding:15px;border-radius:10px")),
+             width = 8
            ),
            column(tags$img(src="ethereum.jpg", width="200px",height="260px"),width=2)),
   hr(),
@@ -34,24 +34,24 @@ Home <- tabPanel(
   fluidRow(
     column(width = 1),
     column(
-      p("1. How do the values of cryptocurrencies Bitcoin and Ethereum change in comparison to their trading 
+      h5(p("1. How do the values of cryptocurrencies Bitcoin and Ethereum change in comparison to their trading 
       volumes? This is significant as strong trends in both value and volume may be indicators of the rise 
       of digital currency as a replacement for the universal-standard physical currency we have today. Our 
       2 datasets for Bitcoin and Ethereum both contain multiple features each for value and volume that can
       represent them."),
-      p("2. How do the price values of Bitcoin and Ethereum compare with each other over time? Bitcoin and 
+         p("2. How do the price values of Bitcoin and Ethereum compare with each other over time? Bitcoin and 
       Ethereum are the 2 biggest currencies, and we look to examine if their price trends are related in 
       some way. As Bitcoin and Ethereum comprise a large amount of the cryptocurrency market share, this 
       could suggest trends for cryptocurrency itself, since price is influenced by things such as supply and 
       demand. Our datasets for the currencies have multiple features for measuring price value, but we will 
       use the feature Close that captures prices when the market closes for the day."),
-      p("3. How do the trading volumes of Bitcoin and Ethereum compare with each other over time? Volume 
+         p("3. How do the trading volumes of Bitcoin and Ethereum compare with each other over time? Volume 
       represents, among other things, potential and interest in the currency. For example, if we see that 
       both currencies have increasing volume over time, we may believe that cryptocurrency may be getting 
       more popular, and that we may see even more investment in the near future. Our datasets for Bitcoin 
       and Ethereum have 2 features that measure volume, 1 for USD and 1 in terms of their own currency 
       (BTC/ETH). The USD feature was used as it would make more sense to an audience that likely has more 
-      knowledge of USD than knowledge of cryptocurrency"), 
+      knowledge of USD than knowledge of cryptocurrency")), 
       width=10, style="text-align:justify;background-color:papayawhip;border-radius:10px"
     )),
   hr(),
@@ -66,37 +66,65 @@ Home <- tabPanel(
 )
 
 Question1 <- tabPanel(
-  "Label_Question1"
+  "High vs Low Price",
+  fluidRow(
+    column(width=2),
+    column(
+      h1(p("Comparing the high and low price for each day",style="color:black;text-align:center")),
+      width=8,style="background-color:lavender;border-radius: 10px"
+    )
+  ),
+  br(),
+  h3("High and low values per day for the 2 currencies were measured in terms of USD (Bitcoin and Ether were 
+    converted to USD).", style="text-align:center;background-color:papayawhip;padding:10px;border-radius:10px"),
+  hr(),
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("year1", p("Select year"), value = 2017, min = 2017, max = 2020, step = 1),
+      br(),
+      radioButtons(
+        "coinType1",
+        p("Select the cryptocurrency you would like to view:"),
+        choices = c("Bitcoin" = 1, "Ethereum" = 2)
+      )
+    ),
+    mainPanel(
+      plotOutput("qwert")
+    )
+  )
 )
 
 Question2 <- tabPanel(
   "Bitcoin vs Ethereum price", 
   headerPanel("Comparing Bitcoin versus Ethereum prices over time"),
-  sidebarPanel(
-    sliderInput(inputId = "volume", p("Current Date of Prices"), value = 2015, min = 2015, max = 2020, step = 1),
-    
-    br(),
-    checkboxGroupInput(inputId = "cryptocurrency",
-                       p("Select the cryptocurrency you would like to include:"),
-                       choices = c("Bitcoin", "Ethereum")
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("year2", p("Select year"), value = 2017, min = 2017, max = 2020, step = 1),
+      br(),
+      checkboxGroupInput(inputId = "coinType2",
+                         p("Select the cryptocurrency you would like to include:"),
+                         choices = c("Bitcoin", "Ethereum")
+      ),
     ),
-  ),
-  p("How do the price values of Bitcoin and Ethereum compare with each other
-    over time? Bitcoin and Ethereum are the 2 biggest currencies, and we look 
-    to examine if their price trends are related in some way. As Bitcoin and Ethereum
-    comprise a large amount of the cryptocurrency market share, this could suggest
-    trends for cryptocurrency itself, since price is influenced by things such as 
-    supply and demand. For this visualization, we will use the value of each 
-    currency at market close."),
-  renderPlot(priceAnalysis),
-  p("We chose to visualize the relationship between Bitcoin and Ethereum price values
-    with a point scatterplot. The x-axis represents dates, and the y-axis represents
-    the price values in USD. The colors of the points represent the currency the observation
-    belongs to. The years that you would like to view can be changed by checking boxes of 
-    any combination of years from 2017 to 2020."), 
-  p("Overall, many points fluctuate from the mean value. This may suggest that cryptocurrency
-    is rapidly changing, as it is not completely solidified as a universal form of currency
-    and is frequently subject to change."),
+    mainPanel(
+      p("How do the price values of Bitcoin and Ethereum compare with each other
+        over time? Bitcoin and Ethereum are the 2 biggest currencies, and we look 
+        to examine if their price trends are related in some way. As Bitcoin and Ethereum
+        comprise a large amount of the cryptocurrency market share, this could suggest
+        trends for cryptocurrency itself, since price is influenced by things such as 
+        supply and demand. For this visualization, we will use the value of each 
+        currency at market close."),
+      plotOutput("priceAnalysis"),
+      p("We chose to visualize the relationship between Bitcoin and Ethereum price values
+        with a point scatterplot. The x-axis represents dates, and the y-axis represents
+        the price values in USD. The colors of the points represent the currency the observation
+        belongs to. The years that you would like to view can be changed by checking boxes of 
+        any combination of years from 2017 to 2020."), 
+      p("Overall, many points fluctuate from the mean value. This may suggest that cryptocurrency
+        is rapidly changing, as it is not completely solidified as a universal form of currency
+        and is frequently subject to change."),
+    )
+  )
 )
 
 Question3 <- tabPanel(
@@ -112,13 +140,13 @@ Question3 <- tabPanel(
   ),
   sidebarLayout(
     sidebarPanel(
-      sliderInput(inputId = "volume", p("Current Date of Volumes"),value = 2015, min = 2015, max = 2020, step = 1),
+      sliderInput(inputId = "volume", p("Current Date of Volumes"),value = 2017, min = 2017, max = 2020, step = 1),
       br(),
       checkboxGroupInput(inputId = "cryptocurrency",p("Select the cryptocurrency you would like to include:"),choices = c("Bitcoin", "Ethereum")),
     ),
     mainPanel(
       fluidRow(
-        plotOutput(outputId = "volumeAnalysis"),
+        plotOutput("volumeAnalysis"),
       ),
       h3("Results and Implications"),
       p("Based on the statistics, it was clear that bitcoin was the favored competitor in terms of cryptocurrencies trading. 
@@ -134,11 +162,17 @@ Result <- tabPanel(
   "Result Page"
 )
 
-my_ui <- navbarPage(
-  "Trends in Cryptocurrencies!",
-  Home,
-  Question1,
-  Question2,
-  Question3, 
-  Result
+my_ui <- shinyUI(
+  fluidPage(
+    theme = shinytheme("cerulean"),
+    titlePanel("Analysing different factors that affect the price of Cryptocurrencies"),
+    navbarPage(
+      "Trends in Cryptocurrencies!",
+      Home,
+      Question1,
+      Question2,
+      Question3, 
+      Result
+    )
+  )
 )
