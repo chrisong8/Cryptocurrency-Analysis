@@ -5,27 +5,20 @@ library("DT")
 
 source("analysis_section_3.R")
 
-
 server <- function(input, output) {
-  output$qwert <- renderPlot({
+  output$highLowAnalysis <- renderPlot({
     high_low(as.character(input$year1), input$coinType1)
   })
   
   output$priceAnalysis <- renderPlot({
-    temp3 <- paste(input$coinType2, collapse = ", ")
-    temp2(as.character(input$year2), temp3)
+    coinTypeTemp1 <- paste(input$coinType2, collapse = ", ")
+    price(as.character(input$year2), coinTypeTemp1)
   })
   
-  output$volumeAnalysis <- renderPlot(
-    volume_analysis <- ggplot(data = combined_volume_data) +
-      geom_point(mapping = aes(x = Date, y = Bitcoin_Volume, color = "Bitcoin Volume"), alpha = .4) +
-      geom_point(mapping = aes(x = Date, y = Ethereum_Volume, color = "Ethereum Volume"), alpha = .4) +
-      labs(
-        title = "Volume Analysis for Bitcoin and Ethereum",
-        x = "Dates" ,
-        y = "Volume"
-      )
-  )
+  output$volumeAnalysis <- renderPlot({
+    coinTypeTemp2 <- paste(input$coinType3, collapse = ", ")
+    volume(as.character(input$year3), coinTypeTemp2)
+  })
   
   output$RawDataBitcoin <- DT::renderDataTable(
     DT::datatable({

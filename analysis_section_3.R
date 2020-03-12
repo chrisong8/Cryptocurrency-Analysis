@@ -59,7 +59,7 @@ names(price_ethereum)[names(price_ethereum) == "Close"] <- "Ethereum_Price"
 combined_price_data <- left_join(price_bitcoin, price_ethereum, by = "Date")
 combined_price_data <- filter(combined_price_data, Bitcoin_Price != 0, Ethereum_Price != 0)
 
-temp2 <- function(year, coin_value) {
+price <- function(year, coin_value) {
   combined_price_data <- filter(combined_price_data, startsWith(Date, year))
   if(coin_value == "Bitcoin") {
     price_analysis <- ggplot(data = combined_price_data) +
@@ -127,16 +127,51 @@ names(volume_ethereum)[names(volume_ethereum) == "Volume.USDT"] <- "Ethereum_Vol
 
 combined_volume_data <- left_join(volume_bitcoin, volume_ethereum, by = "Date")
 combined_volume_data <- filter(combined_volume_data, Bitcoin_Volume != 0, Ethereum_Volume != 0)
-volume_analysis <- ggplot(data = combined_volume_data) +
-  geom_point(mapping = aes(x = Date, y = Bitcoin_Volume, color = "Bitcoin Volume"), alpha = .4) +
-  geom_point(mapping = aes(x = Date, y = Ethereum_Volume, color = "Ethereum Volume"), alpha = .4) +
-  labs(
-    title = "Volume Analysis for Bitcoin and Ethereum",
-    x = "Dates" ,
-    y = "Volume"
-  )
 
-
+volume <- function(year, coin_value) {
+  combined_volume_data <- filter(combined_volume_data, startsWith(Date, year))
+  if(coin_value == "Bitcoin") {
+    volume_analysis <- ggplot(data = combined_volume_data) +
+      geom_point(mapping = aes(x = Date, y = Bitcoin_Volume, colour = "Bitcoin Volume"), alpha = .4) +
+      labs(
+        title = "Volume Analysis for Bitcoin and Ethereum",
+        x = "Dates" ,
+        y = "Volume"
+      ) +
+      theme(axis.text.x=element_blank())
+    return(volume_analysis)
+  } else if(coin_value == "Ethereum") {
+    volume_analysis <- ggplot(data = combined_volume_data) +
+      geom_point(mapping = aes(x = Date, y = Ethereum_Volume, colour = "Ethereum Volume"), alpha = .4) +
+      labs(
+        title = "Volume Analysis for Bitcoin and Ethereum",
+        x = "Dates" ,
+        y = "Volume"
+      ) +
+      theme(axis.text.x=element_blank())
+    return(volume_analysis)
+  } else if(coin_value == "Bitcoin, Ethereum") {
+    volume_analysis <- ggplot(data = combined_volume_data) +
+      geom_point(mapping = aes(x = Date, y = Bitcoin_Volume, colour = "Bitcoin Volume"), alpha = .4) +
+      geom_point(mapping = aes(x = Date, y = Ethereum_Volume, colour = "Ethereum Volume"), alpha = .4) +
+      labs(
+        title = "Volume Analysis for Bitcoin and Ethereum",
+        x = "Dates" ,
+        y = "Volume"
+      ) +
+      theme(axis.text.x=element_blank())
+    return(volume_analysis)
+  } else {
+    volume_analysis <- ggplot(data = combined_volume_data) +
+      labs(
+        title = "Volume Analysis for Bitcoin and Ethereum",
+        x = "Dates" ,
+        y = "Volume"
+      ) +
+      theme(axis.text.x=element_blank())
+    return(volume_analysis)
+  }
+}
 
 bitcoin_median <- volume_bitcoin %>% 
   summarize(
