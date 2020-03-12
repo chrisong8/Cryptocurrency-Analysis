@@ -12,8 +12,8 @@ library(knitr)
 #####################
 
 
-bitcoin <-  read.csv("Binance_BTCUSDT_d.csv", stringsAsFactors = FALSE)
-ethereum <- read.csv("Binance_ETHUSDT_d.csv", stringsAsFactors = FALSE)
+bitcoin <-  read.csv("www/Binance_BTCUSDT_d.csv", stringsAsFactors = FALSE)
+ethereum <- read.csv("www/Binance_ETHUSDT_d.csv", stringsAsFactors = FALSE)
 
 high_low_price_bitcoin <- select(bitcoin, Date, High, Low)
 high_low_price_bitcoin <- filter(high_low_price_bitcoin, High != 0, Low != 0)
