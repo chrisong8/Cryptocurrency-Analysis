@@ -26,6 +26,15 @@ Home <- tabPanel(
            column(tags$img(src="ethereum.jpg", width="200px",height="260px"),width=2)),
   hr(),
   p(
+    "We analyzed two historical datasets that span from 2017 to 2020, one each for the Bitcoin and Ethereum currencies.
+    The data sets consist of daily prices, transactions, and volume. It was collected by data scientists and researchers
+    at CryptoDataDownload, and has been updated daily since 2017. We previously used this data to create a data report, 
+    which is linked below along with the links for the data sets.",
+    a("Bitcoin Data Set, ", href = "https://www.cryptodatadownload.com/cdd/Binance_BTCUSDT_d.csv"), 
+    a("Ethereum Data Set, ", href = "https://www.cryptodatadownload.com/cdd/Binance_ETHUSDT_d.csv"),
+    a("Data Report ", href = "https://info201a-wi20.github.io/project-report-samyakUW/")
+  ),
+  p(
     h3("Target questions:"), style="text-align:center"
   ),
   fluidRow(
@@ -117,9 +126,9 @@ Question2 <- tabPanel(
         the price values in USD. The colors of the points represent the currency the observation
         belongs to. The years that you would like to view can be changed by checking boxes of 
         any combination of years from 2017 to 2020."), 
-      p("Overall, many points fluctuate from the mean value. This may suggest that cryptocurrency
-        is rapidly changing, as it is not completely solidified as a universal form of currency
-        and is frequently subject to change."),
+      p("Overall, many points fluctuate from the mean values. This may suggest that 
+      cryptocurrency is rapidly changing, as it is not completely solidified as a universal 
+      form of currency and is frequently subject to change.")
     )
   )
 )
