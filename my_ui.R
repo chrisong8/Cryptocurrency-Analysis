@@ -137,6 +137,7 @@ Result <- tabPanel(
     fluidRow(
       plotOutput(outputId = "results")
     ),
+    br(),
     h3("Results and Implications"), 
     p("Based on the results, we can conclude that both cryptocurrencies has increasing trend between volume and price. 
       However, Ethereum's data points tend to be more spread out and scatter around the lower volumes. T
