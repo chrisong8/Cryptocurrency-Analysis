@@ -33,7 +33,7 @@ server <- function(input, output) {
         title = "Price Analysis for Bitcoin and Ethereum",
         x = "Dates" ,
         y = "Price"
-      )
+      ) +
     scale_x_continuous(limits = input$price)
   })
   

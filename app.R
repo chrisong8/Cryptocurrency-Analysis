@@ -15,4 +15,4 @@ source("my_server.R")
 
 
 # Run the application 
-shinyApp(ui = ui, server = server)
+shinyApp(ui = my_ui, server = server)
