@@ -1,9 +1,9 @@
-# install.packages(shiny)
-library(shiny)
-# install.packages(ggplot2)
-library(ggplot2)
-#install.packages(shinythemes)
-library(shinythemes)
+# install.packages("shiny")
+library("shiny")
+# install.packages("ggplot2")
+library("ggplot2")
+#install.packages("shinythemes")
+library("shinythemes")
 
 Home <- tabPanel(
   icon("home"),
@@ -30,6 +30,7 @@ Home <- tabPanel(
     The data sets consist of daily prices, transactions, and volume. It was collected by data scientists and researchers
     at CryptoDataDownload, and has been updated daily since 2017. We previously used this data to create a data report, 
     which is linked below along with the links for the data sets.",
+    br(),
     a("Bitcoin Data Set, ", href = "https://www.cryptodatadownload.com/cdd/Binance_BTCUSDT_d.csv"), 
     a("Ethereum Data Set, ", href = "https://www.cryptodatadownload.com/cdd/Binance_ETHUSDT_d.csv"),
     a("Data Report ", href = "https://info201a-wi20.github.io/project-report-samyakUW/")
@@ -84,6 +85,9 @@ Question1 <- tabPanel(
   h3("High and low values per day for the 2 currencies were measured in terms of USD (Bitcoin and Ether were 
     converted to USD).", style="text-align:center;background-color:papayawhip;padding:10px;border-radius:10px"),
   hr(),
+  h4("In the following scatterplot, you can see the trend of the highest and lowest price of the chosen crypto 
+         coin you have choosen to view. By analysing the trend on the graph, one can clearly say that over a given time
+         period, there has been great fluctuations in these values.", style="color:green"),
   sidebarLayout(
     sidebarPanel(
       sliderInput("year1", p("Select year"), value = 2017, min = 2017, max = 2020, step = 1),
@@ -96,6 +100,22 @@ Question1 <- tabPanel(
     ),
     mainPanel(
       plotOutput("highLowAnalysis")
+    )
+  ),
+  hr(),
+  sidebarLayout(
+    sidebarPanel(
+      h4("Mean fluctuation in the difference of high price and low price for selected year:",
+         style="aligh:center"),
+      textOutput("meanHighLow")
+    ),
+    mainPanel(
+      h5("We found the mean fluctuation of prices per day. 
+         This seems to suggest that daily fluctuation is significantly large, and a frequently-changing currency. This 
+         could be indicative of many things, likely higher trading volume, risk or instability. As we further observed 
+         in question 3, trading volume trend increases in general. We can therefore likely attribute the fluctuation 
+         to the increase in volume."
+      )
     )
   )
 )
@@ -126,9 +146,9 @@ Question2 <- tabPanel(
         the price values in USD. The colors of the points represent the currency the observation
         belongs to. The years that you would like to view can be changed by checking boxes of 
         any combination of years from 2017 to 2020."), 
-      p("Overall, many points fluctuate from the mean values. This may suggest that 
-      cryptocurrency is rapidly changing, as it is not completely solidified as a universal 
-      form of currency and is frequently subject to change.")
+      p("Overall, many points fluctuate from the mean value. This may suggest that cryptocurrency
+        is rapidly changing, as it is not completely solidified as a universal form of currency
+        and is frequently subject to change."),
     )
   )
 )
@@ -159,7 +179,7 @@ Question3 <- tabPanel(
       p("Based on the statistics, it was clear that bitcoin was the favored competitor in terms of cryptocurrencies trading. 
       But what's suprising was that Ethereum's volume trading wasn't as small as we thought it would. 
       We were assuming that Bitcoin would be the monopoly in the cryptocurrency business because in a surface level, users tends to only know about Bitcoin. 
-      Because of the volume, it defintitely clarify our assumptions of Bitcoin being the only competitor. 
+      Because of the volume, it definitely clarify our assumptions of Bitcoin being the only competitor. 
       Thus, the results demonstrates that Bitcoin is popular cryptocurrencies and it doesn't mean they're the only dominating the field. ")
     )
   )
@@ -168,21 +188,52 @@ Question3 <- tabPanel(
 Result <- tabPanel(
   "Result Page",
   h1("Results"),
-  main_content(
-    fluidRow(
-      plotOutput(outputId = "results")
+  sidebarLayout(
+    sidebarPanel(
+      h4("The graph on the right is the difference in the high price and the low price over change in volume of Bitcoin.")
     ),
-    br(),
-    h3("Results and Implications"),
-    br(),
-    p(textOutput("question3_stats")),
-    br(),
-    p("Based on the results, we can conclude that both cryptocurrencies has increasing trend between volume and price.
-      However, Ethereum's data points tend to be more spread out and scatter around the lower volumes. T
-      his could imply that our data could been have skewed. Furthemore, this could be telling that Ethereum is a having a lower demand at lower price
+    mainPanel(
+      plotOutput("results1")
+    )
+  ),
+  sidebarLayout(
+    sidebarPanel(
+      h4("The graph on the right is the difference in the high price and the low price over change in volume of Ethereum.")
+    ),
+    mainPanel(
+      plotOutput("results2")
+    )
+  ),
+  hr(),
+  h3("Results and Implications", style = "align:center"),
+  br(),
+  fluidRow(
+    column(p("The mean price for bitcoin was "),
+           p(textOutput("question2_stats1")),
+           width = 3, style = "align:center"
+    ),
+    column(p("The mean price for ethereum was "),
+           p(textOutput("question2_stats2")),
+           width = 3
+    ),
+    column(p("The mean volume for bitcoin was "),
+           p(textOutput("question3_stats1")),
+           width = 3
+    ),
+    column(p("The mean volume for ethereum was "),
+           p(textOutput("question3_stats2")),
+           width = 3
+    ),
+    style = "text-align:left;color:black;background-color:lavender;padding:15px;border-radius:10px"  
+  ),
+  
+  br(),
+  p("Based on the results, we can conclude that both cryptocurrencies has a general increasing trend between volume and price.
+      However, Ethereum's data points tend to be more spread out and scatter around the lower volumes, and greatly fluctuate from
+      the calculated means.
+      This could imply that our data could been have skewed. Furthemore, this could be telling that Ethereum is a having a lower demand at lower price
       since you can see all the data points hovering around the lower end of the volume. This also explains Bitcoin being the preferred cryptocurrency
       since the linear progression (red line) is growing at a higher exponential rate than Ethereum.")
-  )
 )
 
 
