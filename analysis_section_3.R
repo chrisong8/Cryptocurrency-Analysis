@@ -12,32 +12,41 @@ library(knitr)
 #####################
 
 
-bitcoin <-  read.csv("Binance_BTCUSDT_d.csv", stringsAsFactors = FALSE)
-ethereum <- read.csv("Binance_ETHUSDT_d.csv", stringsAsFactors = FALSE)
+bitcoin <-  read.csv("www/Binance_BTCUSDT_d.csv", stringsAsFactors = FALSE)
+ethereum <- read.csv("www/Binance_ETHUSDT_d.csv", stringsAsFactors = FALSE)
 
 high_low_price_bitcoin <- select(bitcoin, Date, High, Low)
 high_low_price_bitcoin <- filter(high_low_price_bitcoin, High != 0, Low != 0)
 high_low_price_ethereum <- select(ethereum, Date, High, Low)
 high_low_price_ethereum <- filter(high_low_price_ethereum, High != 0, Low != 0)
 
-bitcoin_comparison <- ggplot(data = high_low_price_bitcoin) +
-  geom_point(mapping = aes(x = Date, y = High, colour = "High"), color = "Blue", alpha = .5) +
-  geom_point(mapping = aes(x = Date, y = Low, colour = "Low"), color = "Red", alpha = .5) +
-  labs(
-    title = "High and Low Price for Bitcoin",
-    x = "Date" ,
-    y = "Value in USD"
-  )
-
-ethereum_comparison <- ggplot(data = high_low_price_ethereum) +
-  geom_point(mapping = aes(x = Date, y = High, colour = "High"), color = "Blue", alpha = .5) +
-  geom_point(mapping = aes(x = Date, y = Low, colour = "Low"), color = "Red", alpha = .5) +
-  labs(
-    title = "High and Low Price for Ethereum",
-    x = "Date" ,
-    y = "Value in USD"
-  )
-
+high_low <- function(year, coin_type) {
+  if(coin_type == 1) {
+    high_low_price_bitcoin <- filter(high_low_price_bitcoin, startsWith(Date, year))
+    bitcoin_comparison <- ggplot(data = high_low_price_bitcoin) +
+      geom_point(mapping = aes(x = Date, y = High, colour = "High"), color = "Blue", alpha = .5) +
+      geom_point(mapping = aes(x = Date, y = Low, colour = "Low"), color = "Red", alpha = .5) +
+      labs(
+        title = "High and Low Price for Bitcoin",
+        x = "Date",
+        y = "Value in USD"
+      ) +
+      theme(axis.text.x=element_blank())
+    return(bitcoin_comparison)
+  } else {
+    high_low_price_ethereum <- filter(high_low_price_ethereum, startsWith(Date, year))
+    ethereum_comparison <- ggplot(data = high_low_price_ethereum) +
+      geom_point(mapping = aes(x = Date, y = High, colour = "High"), color = "Blue", alpha = .5) +
+      geom_point(mapping = aes(x = Date, y = Low, colour = "Low"), color = "Red", alpha = .5) +
+      labs(
+        title = "High and Low Price for Ethereum",
+        x = "Date",
+        y = "Value in USD"
+      ) +
+      theme(axis.text.x=element_blank())
+    return(ethereum_comparison)
+  }
+}
 
 #####################
 #### QUESTION 2 #####
@@ -50,14 +59,50 @@ names(price_ethereum)[names(price_ethereum) == "Close"] <- "Ethereum_Price"
 combined_price_data <- left_join(price_bitcoin, price_ethereum, by = "Date")
 combined_price_data <- filter(combined_price_data, Bitcoin_Price != 0, Ethereum_Price != 0)
 
-price_analysis <- ggplot(data = combined_price_data) +
-  geom_point(mapping = aes(x = Date, y = Bitcoin_Price, colour = "Bitcoin Price"), alpha = .4) +
-  geom_point(mapping = aes(x = Date, y = Ethereum_Price, colour = "Ethereum Price"), alpha = .4) +
-  labs(
-    title = "Price Analysis for Bitcoin and Ethereum",
-    x = "Dates" ,
-    y = "Price"
-  )
+price <- function(year, coin_value) {
+  combined_price_data <- filter(combined_price_data, startsWith(Date, year))
+  if(coin_value == "Bitcoin") {
+    price_analysis <- ggplot(data = combined_price_data) +
+      geom_point(mapping = aes(x = Date, y = Bitcoin_Price, colour = "Bitcoin Price"), alpha = .4) +
+      labs(
+        title = "Price Analysis for Bitcoin and Ethereum",
+        x = "Dates" ,
+        y = "Price"
+      ) +
+      theme(axis.text.x=element_blank())
+    return(price_analysis)
+  } else if(coin_value == "Ethereum") {
+    price_analysis <- ggplot(data = combined_price_data) +
+      geom_point(mapping = aes(x = Date, y = Ethereum_Price, colour = "Ethereum Price"), alpha = .4) +
+      labs(
+        title = "Price Analysis for Bitcoin and Ethereum",
+        x = "Dates" ,
+        y = "Price"
+      ) +
+      theme(axis.text.x=element_blank())
+    return(price_analysis)
+  } else if(coin_value == "Bitcoin, Ethereum") {
+    price_analysis <- ggplot(data = combined_price_data) +
+      geom_point(mapping = aes(x = Date, y = Bitcoin_Price, colour = "Bitcoin Price"), alpha = .4) +
+      geom_point(mapping = aes(x = Date, y = Ethereum_Price, colour = "Ethereum Price"), alpha = .4) +
+      labs(
+        title = "Price Analysis for Bitcoin and Ethereum",
+        x = "Dates" ,
+        y = "Price"
+      ) +
+      theme(axis.text.x=element_blank())
+    return(price_analysis)
+  } else {
+    price_analysis <- ggplot(data = combined_price_data) +
+      labs(
+        title = "Price Analysis for Bitcoin and Ethereum",
+        x = "Dates" ,
+        y = "Price"
+      ) +
+      theme(axis.text.x=element_blank())
+    return(price_analysis)
+  }
+}
 
 
 bitcoin_price_mean <- price_bitcoin %>% 
@@ -82,16 +127,51 @@ names(volume_ethereum)[names(volume_ethereum) == "Volume.USDT"] <- "Ethereum_Vol
 
 combined_volume_data <- left_join(volume_bitcoin, volume_ethereum, by = "Date")
 combined_volume_data <- filter(combined_volume_data, Bitcoin_Volume != 0, Ethereum_Volume != 0)
-volume_analysis <- ggplot(data = combined_volume_data) +
-  geom_point(mapping = aes(x = Date, y = Bitcoin_Volume, color = "Bitcoin Volume"), alpha = .4) +
-  geom_point(mapping = aes(x = Date, y = Ethereum_Volume, color = "Ethereum Volume"), alpha = .4) +
-  labs(
-    title = "Volume Analysis for Bitcoin and Ethereum",
-    x = "Dates" ,
-    y = "Volume"
-  )
 
-
+volume <- function(year, coin_value) {
+  combined_volume_data <- filter(combined_volume_data, startsWith(Date, year))
+  if(coin_value == "Bitcoin") {
+    volume_analysis <- ggplot(data = combined_volume_data) +
+      geom_point(mapping = aes(x = Date, y = Bitcoin_Volume, colour = "Bitcoin Volume"), alpha = .4) +
+      labs(
+        title = "Volume Analysis for Bitcoin and Ethereum",
+        x = "Dates" ,
+        y = "Volume"
+      ) +
+      theme(axis.text.x=element_blank())
+    return(volume_analysis)
+  } else if(coin_value == "Ethereum") {
+    volume_analysis <- ggplot(data = combined_volume_data) +
+      geom_point(mapping = aes(x = Date, y = Ethereum_Volume, colour = "Ethereum Volume"), alpha = .4) +
+      labs(
+        title = "Volume Analysis for Bitcoin and Ethereum",
+        x = "Dates" ,
+        y = "Volume"
+      ) +
+      theme(axis.text.x=element_blank())
+    return(volume_analysis)
+  } else if(coin_value == "Bitcoin, Ethereum") {
+    volume_analysis <- ggplot(data = combined_volume_data) +
+      geom_point(mapping = aes(x = Date, y = Bitcoin_Volume, colour = "Bitcoin Volume"), alpha = .4) +
+      geom_point(mapping = aes(x = Date, y = Ethereum_Volume, colour = "Ethereum Volume"), alpha = .4) +
+      labs(
+        title = "Volume Analysis for Bitcoin and Ethereum",
+        x = "Dates" ,
+        y = "Volume"
+      ) +
+      theme(axis.text.x=element_blank())
+    return(volume_analysis)
+  } else {
+    volume_analysis <- ggplot(data = combined_volume_data) +
+      labs(
+        title = "Volume Analysis for Bitcoin and Ethereum",
+        x = "Dates" ,
+        y = "Volume"
+      ) +
+      theme(axis.text.x=element_blank())
+    return(volume_analysis)
+  }
+}
 
 bitcoin_median <- volume_bitcoin %>% 
   summarize(
