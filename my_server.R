@@ -58,7 +58,6 @@ server <- function(input, output) {
     colnames = c("Date","Symbol","Open","High","Low","Close","Volume BTC","Volume USDT")
     ))
   
-<<<<<<< HEAD
 ### Results ###
   
   price_difference_bitcoin <- select(bitcoin, High, Low, Volume.USDT) 
@@ -90,10 +89,21 @@ server <- function(input, output) {
       )
     
   })
+  
+###Stats###
+  output$question3_stats  <- renderText({
+    coin_median <- volume_bitcoin %>% 
+      summarize(
+        median(Bitcoin_Volume, na.rm = TRUE)
+      )
+    
+    
+    ethereum_median <- volume_ethereum %>% 
+      summarize(
+        median(Ethereum_Volume, na.rm = TRUE)
+      )
+  })
 }
 
 
 
-=======
-}
->>>>>>> 8c5862b4073251413d2d3d5bb4c2e5aa47d03ea7
