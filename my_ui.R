@@ -30,6 +30,7 @@ Home <- tabPanel(
     The data sets consist of daily prices, transactions, and volume. It was collected by data scientists and researchers
     at CryptoDataDownload, and has been updated daily since 2017. We previously used this data to create a data report, 
     which is linked below along with the links for the data sets.",
+    br(),
     a("Bitcoin Data Set, ", href = "https://www.cryptodatadownload.com/cdd/Binance_BTCUSDT_d.csv"), 
     a("Ethereum Data Set, ", href = "https://www.cryptodatadownload.com/cdd/Binance_ETHUSDT_d.csv"),
     a("Data Report ", href = "https://info201a-wi20.github.io/project-report-samyakUW/")
@@ -118,7 +119,7 @@ Question2 <- tabPanel(
         to examine if their price trends are related in some way. As Bitcoin and Ethereum
         comprise a large amount of the cryptocurrency market share, this could suggest
         trends for cryptocurrency itself, since price is influenced by things such as 
-        supply and demand. For this visualization, we will use the value of each 
+        supply and demand. For this visualization, we will use the value of each  
         currency at market close."),
       plotOutput("priceAnalysis"),
       p("We chose to visualize the relationship between Bitcoin and Ethereum price values
@@ -126,7 +127,7 @@ Question2 <- tabPanel(
         the price values in USD. The colors of the points represent the currency the observation
         belongs to. The years that you would like to view can be changed by checking boxes of 
         any combination of years from 2017 to 2020."), 
-      p("Overall, many points fluctuate from the mean values. This may suggest that 
+      p("Overall, many points frequently fluctuate from the mean values. This may suggest that 
       cryptocurrency is rapidly changing, as it is not completely solidified as a universal 
       form of currency and is frequently subject to change.")
     )
@@ -175,11 +176,13 @@ Result <- tabPanel(
     br(),
     h3("Results and Implications"),
     br(),
+    p(textOutput("question2_stats")),
+    br(),
     p(textOutput("question3_stats")),
     br(),
     p("Based on the results, we can conclude that both cryptocurrencies has increasing trend between volume and price.
-      However, Ethereum's data points tend to be more spread out and scatter around the lower volumes. T
-      his could imply that our data could been have skewed. Furthemore, this could be telling that Ethereum is a having a lower demand at lower price
+      However, Ethereum's data points tend to be more spread out and scatter around the lower volumes.
+      This could imply that our data could been have skewed. Furthemore, this could be telling that Ethereum is a having a lower demand at lower price
       since you can see all the data points hovering around the lower end of the volume. This also explains Bitcoin being the preferred cryptocurrency
       since the linear progression (red line) is growing at a higher exponential rate than Ethereum.")
   )
