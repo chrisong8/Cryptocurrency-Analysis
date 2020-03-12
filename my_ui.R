@@ -176,12 +176,15 @@ Result <- tabPanel(
     br(),
     h3("Results and Implications"),
     br(),
+    p("The median price was "),
     p(textOutput("question2_stats")),
     br(),
+    p("The median volume was "),
     p(textOutput("question3_stats")),
     br(),
-    p("Based on the results, we can conclude that both cryptocurrencies has increasing trend between volume and price.
-      However, Ethereum's data points tend to be more spread out and scatter around the lower volumes.
+    p("Based on the results, we can conclude that both cryptocurrencies has a general increasing trend between volume and price.
+      However, Ethereum's data points tend to be more spread out and scatter around the lower volumes, and greatly fluctuate from
+      the calculated means.
       This could imply that our data could been have skewed. Furthemore, this could be telling that Ethereum is a having a lower demand at lower price
       since you can see all the data points hovering around the lower end of the volume. This also explains Bitcoin being the preferred cryptocurrency
       since the linear progression (red line) is growing at a higher exponential rate than Ethereum.")
