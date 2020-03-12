@@ -248,7 +248,7 @@ my_ui <- shinyUI(
       Question1,
       Question2,
       Question3, 
-      Result,
+      Result
     )
   )
 )
