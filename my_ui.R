@@ -179,7 +179,7 @@ Question3 <- tabPanel(
       p("Based on the statistics, it was clear that bitcoin was the favored competitor in terms of cryptocurrencies trading. 
       But what's suprising was that Ethereum's volume trading wasn't as small as we thought it would. 
       We were assuming that Bitcoin would be the monopoly in the cryptocurrency business because in a surface level, users tends to only know about Bitcoin. 
-      Because of the volume, it defintilt clarify our assumptions of Bitcoin being the only competitor. 
+      Because of the volume, it definitely clarify our assumptions of Bitcoin being the only competitor. 
       Thus, the results demonstrates that Bitcoin is popular cryptocurrencies and it doesn't mean they're the only dominating the field. ")
     )
   )
