@@ -58,65 +58,33 @@ server <- function(input, output) {
     colnames = c("Date","Symbol","Open","High","Low","Close","Volume BTC","Volume USDT")
     ))
   
-### Results ###
-  
-  price_difference_bitcoin <- select(bitcoin, High, Low, Volume.USDT) 
-  price_difference_bitcoin <- mutate(price_difference_bitcoin, 
-                                     difference = High - Low)
-  
-  price_difference_ethereum <- select(ethereum, High, Low, Volume.USDT) 
-  price_difference_ethereum <- mutate(price_difference_ethereum, 
-                                      difference = High - Low)
-  
-  
-  output$results <- renderPlot({
-    bitcoin_result <- ggplot(data = price_difference_bitcoin) +
-      geom_point(mapping = aes(x = Volume.USDT, y = difference, colour = "High"), color = "Blue", alpha = .5) +
-      geom_smooth(mapping = aes(x = Volume.USDT, y = difference, colour = "High"), color = "Red", alpha = .5) +
-      labs(
-        title = "High and Low Price for Bitcoin",
-        x = "Volume" ,
-        y = "Difference in USD"
-      )
-    
-    ethereum_result <- ggplot(data = price_difference_ethereum) +
-      geom_point(mapping = aes(x = Volume.USDT, y = difference, colour = "High"), color = "Blue", alpha = .5) +
-      geom_smooth(mapping = aes(x = Volume.USDT, y = difference, colour = "High"), color = "Red", alpha = .5) +
-      labs(
-        title = "High and Low Price for Ethereum",
-        x = "Volume" ,
-        y = "Difference in USD"
-      )
-    
+  output$meanHighLow <- renderText({
+    meanCal(as.character(input$year1), input$coinType1)
   })
   
-###Stats###
-  output$question2_stats  <- renderText({
-    bitcoin_median <- price_bitcoin %>% 
-      summarize(
-        median(Bitcoin_Price, na.rm = TRUE)
-      )
-    
-    
-    ethereum_median <- price_ethereum %>% 
-      summarize(
-        median(Ethereum_Price, na.rm = TRUE)
-      )
-  })
+  ### Results ###
+  output$results1 <- renderPlot(
+    bitcoin_result
+  )
   
-  output$question3_stats  <- renderText({
-    coin_median <- volume_bitcoin %>% 
-      summarize(
-        median(Bitcoin_Volume, na.rm = TRUE)
-      )
-    
-    
-    ethereum_median <- volume_ethereum %>% 
-      summarize(
-        median(Ethereum_Volume, na.rm = TRUE)
-      )
-  })
+  output$results2 <- renderPlot(
+    ethereum_result
+  )
+  
+  ###Stats###
+  output$question2_stats1  <- renderText(
+    bitcoin_price_mean
+  )
+  
+  output$question2_stats2 <- renderText(
+    ethereum_price_mean
+  )
+  
+  output$question3_stats1  <- renderText(
+    bitcoin_volume_mean
+  )
+  
+  output$question3_stats2 <- renderText(
+    ethereum_volume_mean
+  )
 }
-
-
-

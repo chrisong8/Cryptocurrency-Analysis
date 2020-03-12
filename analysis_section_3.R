@@ -20,6 +20,18 @@ high_low_price_bitcoin <- filter(high_low_price_bitcoin, High != 0, Low != 0)
 high_low_price_ethereum <- select(ethereum, Date, High, Low)
 high_low_price_ethereum <- filter(high_low_price_ethereum, High != 0, Low != 0)
 
+meanCal <- function(year, coinType) {
+  if(coinType == 1) {
+    high_low_price_bitcoin <- filter(high_low_price_bitcoin, startsWith(Date, year))
+    high_low_price_bitcoin <- mutate(high_low_price_bitcoin, difference = High - Low)
+    return(as.character(mean(high_low_price_bitcoin$difference)))
+  } else {
+    high_low_price_ethereum <- filter(high_low_price_ethereum, startsWith(Date, year))
+    high_low_price_ethereum <- mutate(high_low_price_ethereum, difference = High - Low)
+    return(as.character(mean(high_low_price_ethereum$difference)))
+  }
+}
+
 high_low <- function(year, coin_type) {
   if(coin_type == 1) {
     high_low_price_bitcoin <- filter(high_low_price_bitcoin, startsWith(Date, year))
@@ -54,6 +66,7 @@ high_low <- function(year, coin_type) {
 price_bitcoin <- select(bitcoin, Date, Close)
 names(price_bitcoin)[names(price_bitcoin) == "Close"] <- "Bitcoin_Price"
 price_ethereum <- select(ethereum,Date, Close)
+price_ethereum <- filter(price_ethereum, Close != 0)
 names(price_ethereum)[names(price_ethereum) == "Close"] <- "Ethereum_Price"
 
 combined_price_data <- left_join(price_bitcoin, price_ethereum, by = "Date")
@@ -105,24 +118,20 @@ price <- function(year, coin_value) {
 }
 
 
-bitcoin_price_mean <- price_bitcoin %>% 
-  summarize(
-    median(Bitcoin_Price, na.rm = TRUE)
-  )
+bitcoin_price_mean <- as.character(mean(price_bitcoin$Bitcoin_Price))
 
-ethereum_price_mean <- price_ethereum %>% 
-  summarize(
-    median(Ethereum_Price, na.rm = TRUE)
-  )
+ethereum_price_mean <- as.character(mean(price_ethereum$Ethereum_Price))
 
 #####################
 #### QUESTION 3 #####
 #####################
 
 volume_bitcoin <- select(bitcoin,Date, Volume.USDT)
+volume_bitcoin <- filter(volume_bitcoin, Volume.USDT != 0)
 names(volume_bitcoin)[names(volume_bitcoin) == "Volume.USDT"] <- "Bitcoin_Volume"
 
 volume_ethereum <- select(ethereum,Date, Volume.USDT)
+volume_ethereum <- filter(volume_ethereum, Volume.USDT != 0)
 names(volume_ethereum)[names(volume_ethereum) == "Volume.USDT"] <- "Ethereum_Volume"
 
 combined_volume_data <- left_join(volume_bitcoin, volume_ethereum, by = "Date")
@@ -173,17 +182,9 @@ volume <- function(year, coin_value) {
   }
 }
 
-bitcoin_median <- volume_bitcoin %>% 
-  summarize(
-    median(Bitcoin_Volume, na.rm = TRUE)
-  )
+bitcoin_volume_mean <- as.character(mean(volume_bitcoin$Bitcoin_Volume))
 
-
-ethereum_median <- volume_ethereum %>% 
-  summarize(
-    median(Ethereum_Volume, na.rm = TRUE)
-  )
-
+ethereum_volume_mean <- as.character(mean(volume_ethereum$Ethereum_Volume))
 
 ########################
 ###### RESULT ##########
@@ -191,6 +192,7 @@ ethereum_median <- volume_ethereum %>%
 price_difference_bitcoin <- select(bitcoin, High, Low, Volume.USDT) 
 price_difference_bitcoin <- mutate(price_difference_bitcoin, 
                                    difference = High - Low)
+
 
 price_difference_ethereum <- select(ethereum, High, Low, Volume.USDT) 
 price_difference_ethereum <- mutate(price_difference_ethereum, 
@@ -213,4 +215,3 @@ ethereum_result <- ggplot(data = price_difference_ethereum) +
     x = "Volume" ,
     y = "Difference in USD"
   )
-
