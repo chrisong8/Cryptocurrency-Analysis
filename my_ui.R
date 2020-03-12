@@ -185,6 +185,7 @@ Result <- tabPanel(
   )
 )
 
+
 my_ui <- shinyUI(
   fluidPage(
     theme = shinytheme("cerulean"),
@@ -196,7 +197,7 @@ my_ui <- shinyUI(
       Question1,
       Question2,
       Question3, 
-      Result
+      Result,
     )
   )
 )
