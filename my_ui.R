@@ -124,14 +124,26 @@ Question3 <- tabPanel(
       p("Based on the statistics, it was clear that bitcoin was the favored competitor in terms of cryptocurrencies trading. 
       But what's suprising was that Ethereum's volume trading wasn't as small as we thought it would. 
       We were assuming that Bitcoin would be the monopoly in the cryptocurrency business because in a surface level, users tends to only know about Bitcoin. 
-      Because of the volume, it defintilt clarify our assumptions of Bitcoin being the only competitor. 
+      Because of the volume, it defintitely clarify our assumptions of Bitcoin being the only competitor. 
       Thus, the results demonstrates that Bitcoin is popular cryptocurrencies and it doesn't mean they're the only dominating the field. ")
     )
   )
 )
 
 Result <- tabPanel(
-  "Result Page"
+  "Result Page",
+  h1("Results"),
+  main_content(
+    fluidRow(
+      plotOutput(outputId = "results")
+    ),
+    h3("Results and Implications"), 
+    p("Based on the results, we can conclude that both cryptocurrencies has increasing trend between volume and price. 
+      However, Ethereum's data points tend to be more spread out and scatter around the lower volumes. T
+      his could imply that our data could been have skewed. Furthemore, this could be telling that Ethereum is a having a lower demand at lower price 
+      since you can see all the data points hovering around the lower end of the volume. This also explains Bitcoin being the preferred cryptocurrency
+      since the linear progression (red line) is growing at a higher exponential rate than Ethereum.")
+  )
 )
 
 my_ui <- navbarPage(
