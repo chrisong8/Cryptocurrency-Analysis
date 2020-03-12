@@ -1,9 +1,9 @@
-# install.packages("shiny")
-library("shiny")
+# install.packages(shiny)
+library(shiny)
 # install.packages(ggplot2)
-library("ggplot2")
+library(ggplot2)
 #install.packages(shinythemes)
-library("shinythemes")
+library(shinythemes)
 
 Home <- tabPanel(
   icon("home"),
