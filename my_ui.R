@@ -5,9 +5,6 @@ library("ggplot2")
 #install.packages("shinythemes")
 library("shinythemes")
 
-bitcoin <-  read.csv("www/Binance_BTCUSDT_d.csv", stringsAsFactors = FALSE)
-ethereum <- read.csv("www/Binance_ETHUSDT_d.csv", stringsAsFactors = FALSE)
-
 Home <- tabPanel(
   icon("home"),
   fluidRow(column(tags$img(src="bitcoin.jpg", width="200px",height="260px"),width=2),
@@ -89,7 +86,7 @@ Question1 <- tabPanel(
       )
     ),
     mainPanel(
-      plotOutput("qwert")
+      plotOutput("highLowAnalysis")
     )
   )
 )
@@ -135,14 +132,15 @@ Question3 <- tabPanel(
          For example, if we see that both currencies have increasing volume over time, we may believe that cryptocurrency may be getting more popular, and that we may see even more investment in the near future. 
          Our datasets for Bitcoin and Ethereum have 2 features that measure volume, 1 for USD and 1 in terms of their own currency (BTC/ETH). The USD feature was used as it would make more sense to an audience that likely has more knowledge of USD than knowledge of cryptocurrency
         "),
-    
     br()
   ),
   sidebarLayout(
     sidebarPanel(
-      sliderInput(inputId = "volume", p("Current Date of Volumes"),value = 2017, min = 2017, max = 2020, step = 1),
+      sliderInput(inputId = "year3", p("Select year"),value = 2017, min = 2017, max = 2020, step = 1),
       br(),
-      checkboxGroupInput(inputId = "cryptocurrency",p("Select the cryptocurrency you would like to include:"),choices = c("Bitcoin", "Ethereum")),
+      checkboxGroupInput("coinType3",
+                         p("Select the cryptocurrency you would like to include:"),
+                         choices = c("Bitcoin", "Ethereum")),
     ),
     mainPanel(
       fluidRow(
