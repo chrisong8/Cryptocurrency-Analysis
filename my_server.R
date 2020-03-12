@@ -91,6 +91,19 @@ server <- function(input, output) {
   })
   
 ###Stats###
+  output$question2_stats  <- renderText({
+    bitcoin_mean <- price_bitcoin %>% 
+      summarize(
+        median(Bitcoin_Price, na.rm = TRUE)
+      )
+    
+    
+    ethereum_mean <- price_ethereum %>% 
+      summarize(
+        median(Ethereum_Price, na.rm = TRUE)
+      )
+  })
+  
   output$question3_stats  <- renderText({
     coin_median <- volume_bitcoin %>% 
       summarize(
