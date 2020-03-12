@@ -173,10 +173,13 @@ Result <- tabPanel(
       plotOutput(outputId = "results")
     ),
     br(),
-    h3("Results and Implications"), 
-    p("Based on the results, we can conclude that both cryptocurrencies has increasing trend between volume and price. 
+    h3("Results and Implications"),
+    br(),
+    p(textOutput("question3_stats")),
+    br(),
+    p("Based on the results, we can conclude that both cryptocurrencies has increasing trend between volume and price.
       However, Ethereum's data points tend to be more spread out and scatter around the lower volumes. T
-      his could imply that our data could been have skewed. Furthemore, this could be telling that Ethereum is a having a lower demand at lower price 
+      his could imply that our data could been have skewed. Furthemore, this could be telling that Ethereum is a having a lower demand at lower price
       since you can see all the data points hovering around the lower end of the volume. This also explains Bitcoin being the preferred cryptocurrency
       since the linear progression (red line) is growing at a higher exponential rate than Ethereum.")
   )
@@ -185,7 +188,8 @@ Result <- tabPanel(
 my_ui <- shinyUI(
   fluidPage(
     theme = shinytheme("cerulean"),
-    titlePanel("Analysing different factors that affect the price of Cryptocurrencies"),
+    titlePanel("Analysing Different Factors that affect the Price of Cryptocurrencies"),
+    h3("G7, Samyak Jain, Chris Ong, Minh tu Huynh"),
     navbarPage(
       "Trends in Cryptocurrencies!",
       Home,
