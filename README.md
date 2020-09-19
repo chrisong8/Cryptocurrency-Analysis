@@ -1,3 +1,2 @@
-# Project App
-This repo contains R code for generating an interactive application as part of the final project
-for the _Technical Foundations of Informatics_ course at the UW iSchool.
+This R code runs a Shiny web app that compares Bitcoin and Ethereum cryptocurrencies.
+(Outdated database, graphs are offline)
