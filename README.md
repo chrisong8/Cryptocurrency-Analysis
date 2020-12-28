@@ -1,2 +1,1 @@
-This R code runs a Shiny web app that compares Bitcoin and Ethereum cryptocurrencies.
-(Outdated database, graphs are offline)
+This R code runs a Shiny web app that compared Bitcoin and Ethereum cryptocurrencies from 2017 to 2019.
